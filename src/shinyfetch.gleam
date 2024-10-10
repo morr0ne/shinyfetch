@@ -1,6 +1,8 @@
+import cpuinfo
 import envoy
 import gleam/dict
 import gleam/io
+import gleam/list
 import gleam/result
 import os_release
 import utils
@@ -28,7 +30,13 @@ pub fn main() {
   // TODO: Improve shell parsing
   let shell = envoy.get("SHELL") |> result.unwrap("unknown")
   let os_release = os_release.parse_os_release()
-  // let cpus = parse_cpuinfo()
+
+  let cpu =
+    cpuinfo.parse_cpuinfo()
+    |> list.first
+    |> result.unwrap(dict.new())
+    |> dict.get("model name")
+    |> result.unwrap("unknown")
 
   io.println(user <> "@" <> uname.nodename)
   io.println("----------------")
@@ -38,4 +46,5 @@ pub fn main() {
   io.println("Kernel: " <> uname.release)
   io.println("Uptime: " <> uptime() |> utils.format_time)
   io.println("Shell: " <> shell)
+  io.println("CPU: " <> cpu)
 }
