@@ -1,6 +1,5 @@
 import envoy
 import gleam/dict
-import gleam/int
 import gleam/io
 import gleam/result
 import os_release
@@ -25,18 +24,18 @@ pub fn uptime() -> Int
 
 pub fn main() {
   let uname = uname()
-  let user = result.unwrap(envoy.get("USER"), "unknown")
+  let user = envoy.get("USER") |> result.unwrap("unknown")
   // TODO: Improve shell parsing
-  let shell = result.unwrap(envoy.get("SHELL"), "unknown")
+  let shell = envoy.get("SHELL") |> result.unwrap("unknown")
   let os_release = os_release.parse_os_release()
   // let cpus = parse_cpuinfo()
 
   io.println(user <> "@" <> uname.nodename)
   io.println("----------------")
   io.println(
-    "OS: " <> result.unwrap(dict.get(os_release, "PRETTY_NAME"), "Unknown"),
+    "OS: " <> os_release |> dict.get("PRETTY_NAME") |> result.unwrap("Unknown"),
   )
   io.println("Kernel: " <> uname.release)
-  io.println("Uptime: " <> utils.format_time(uptime()))
+  io.println("Uptime: " <> uptime() |> utils.format_time)
   io.println("Shell: " <> shell)
 }
