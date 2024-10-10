@@ -1,3 +1,4 @@
+use rustix::time::{clock_gettime, ClockId};
 use rustler::NifRecord;
 
 #[derive(NifRecord)]
@@ -29,6 +30,11 @@ impl UnicodeUname {
 #[rustler::nif]
 pub fn uname() -> UnicodeUname {
     UnicodeUname::new()
+}
+
+#[rustler::nif]
+pub fn uptime() -> i64 {
+    clock_gettime(ClockId::Boottime).tv_sec
 }
 
 rustler::init!("fetcher");
