@@ -4,6 +4,7 @@ import gleam/dict
 import gleam/io
 import gleam/list
 import gleam/result
+import gleam_community/ansi
 import os_release
 import utils
 
@@ -38,13 +39,14 @@ pub fn main() {
     |> dict.get("model name")
     |> result.unwrap("unknown")
 
-  io.println(user <> "@" <> uname.nodename)
+  io.println({ user <> "@" <> uname.nodename } |> ansi.bright_cyan)
   io.println("----------------")
   io.println(
-    "OS: " <> os_release |> dict.get("PRETTY_NAME") |> result.unwrap("Unknown"),
+    "OS: " |> ansi.bright_cyan
+    <> os_release |> dict.get("PRETTY_NAME") |> result.unwrap("Unknown"),
   )
-  io.println("Kernel: " <> uname.release)
-  io.println("Uptime: " <> uptime() |> utils.format_time)
-  io.println("Shell: " <> shell)
-  io.println("CPU: " <> cpu)
+  io.println("Kernel: " |> ansi.bright_cyan <> uname.release)
+  io.println("Uptime: " |> ansi.bright_cyan <> uptime() |> utils.format_time)
+  io.println("Shell: " |> ansi.bright_cyan <> shell)
+  io.println("CPU: " |> ansi.bright_cyan <> cpu)
 }
