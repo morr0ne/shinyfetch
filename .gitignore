@@ -1,0 +1,15 @@
+# Erlang things
+*.beam
+*.ez
+erl_crash.dump
+
+# Rust stuff
+/target
+
+# Temp folders
+temp
+tmp
+
+# Build artifacts
+/build
+shinyfetch
