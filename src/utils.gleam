@@ -2,13 +2,9 @@ import gleam/int
 import gleam/string
 
 pub fn trim_quotes(value: String) -> String {
-  case value {
-    "\"" <> trimmed ->
-      case string.reverse(trimmed) {
-        "\"" <> trimmed -> string.reverse(trimmed)
-        _ -> value
-      }
-    _ -> value
+  case value |> string.starts_with("\"") && value |> string.ends_with("\"") {
+    True -> value |> string.drop_left(1) |> string.drop_right(1)
+    False -> value
   }
 }
 
