@@ -26,3 +26,6 @@ run: build-native
 
 [group('packaging')]
 install:
+    mkdir -p {{ DESTDIR }}{{ LIBRARY }}/shinyfetch
+    cp --recursive --preserve=mode --no-target-directory build/erlang-shipment {{ DESTDIR }}{{ LIBRARY }}/shinyfetch
+    install -Dm755 bin/shinyfetch {{ DESTDIR }}{{ BINARY }}/shinyfetch
