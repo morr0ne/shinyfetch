@@ -2,7 +2,7 @@ build:
     mkdir -p priv
     cargo build --release
     cp target/release/libfetcher.so priv/
-    gleam run -m gleescript
+    gleam build
 
 run:
     mkdir -p priv
