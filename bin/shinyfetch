@@ -4,10 +4,8 @@ set -eu
 PACKAGE=shinyfetch
 BASE=$(dirname "$0")
 
-run() {
-  erl \
-    -pa "$BASE"/*/ebin \
-    -eval "$PACKAGE@@main:run($PACKAGE)" \
-    -noshell \
-    -extra "$@"
-}
+erl \
+  -pa "$BASE"/*/ebin \
+  -eval "$PACKAGE@@main:run($PACKAGE)" \
+  -noshell \
+  -extra "$@"
