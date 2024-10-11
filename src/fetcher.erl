@@ -7,7 +7,8 @@
 -on_load init/0.
 
 init() ->
-    erlang:load_nif("priv/libfetcher", 0).
+    erlang:load_nif(
+        filename:join([code:priv_dir(shinyfetch), "libfetcher"]), 0).
 
 uname() ->
     exit(nif_library_not_loaded).
