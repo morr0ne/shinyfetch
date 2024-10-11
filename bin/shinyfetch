@@ -2,7 +2,7 @@
 set -eu
 
 PACKAGE=shinyfetch
-BASE=$(dirname "$0")
+BASE=$(dirname $(dirname "$0"))/lib/shinyfetch
 
 erl \
   -pa "$BASE"/*/ebin \
