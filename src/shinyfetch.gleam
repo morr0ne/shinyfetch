@@ -50,14 +50,16 @@ pub fn main() {
     |> result.unwrap("unknown")
 
   let meminfo = parse_meminfo()
+  let memtotal = meminfo |> dict.get("MemTotal") |> result.unwrap(0)
+  let memavailable = meminfo |> dict.get("MemAvailable") |> result.unwrap(0)
 
-  let memavailable =
-    { meminfo |> dict.get("MemAvailable") |> result.unwrap(0) }
+  let total_ram =
+    memtotal
     |> bytesize.kib
     |> bytesize.to_string
 
-  let memtotal =
-    { meminfo |> dict.get("MemTotal") |> result.unwrap(0) }
+  let used_ram =
+    memtotal - memavailable
     |> bytesize.kib
     |> bytesize.to_string
 
@@ -71,9 +73,7 @@ pub fn main() {
   io.println("Uptime: " |> ansi.bright_cyan <> uptime() |> utils.format_time)
   io.println("Shell: " |> ansi.bright_cyan <> shell)
   io.println("CPU: " |> ansi.bright_cyan <> cpu)
-  io.println(
-    "Memory: " |> ansi.bright_cyan <> memavailable <> " / " <> memtotal,
-  )
+  io.println("Memory: " |> ansi.bright_cyan <> used_ram <> " / " <> total_ram)
 }
 
 pub fn parse_meminfo() -> Dict(String, Int) {
