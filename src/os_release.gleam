@@ -18,7 +18,7 @@ pub fn parse_os_release() -> Dict(String, String) {
             dict.insert(
               os_release,
               key,
-              value |> string.trim |> utils.trim_quotes,
+              value |> string.trim |> utils.trim_matches("\""),
             )
         }
       })
