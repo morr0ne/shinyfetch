@@ -1,9 +1,14 @@
 import gleam/int
 import gleam/string
 
-pub fn trim_quotes(value: String) -> String {
-  case value |> string.starts_with("\"") && value |> string.ends_with("\"") {
-    True -> value |> string.drop_left(1) |> string.drop_right(1)
+pub fn trim_matches(value: String, matcher: String) -> String {
+  case
+    value |> string.starts_with(matcher) && value |> string.ends_with(matcher)
+  {
+    True ->
+      value
+      |> string.drop_left(matcher |> string.length)
+      |> string.drop_right(matcher |> string.length)
     False -> value
   }
 }
