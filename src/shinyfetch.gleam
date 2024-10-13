@@ -4,6 +4,7 @@ import gleam/dict
 import gleam/io
 import gleam/list
 import gleam/result
+import gleam/string
 import gleam_community/ansi
 import os_release
 import utils
@@ -29,7 +30,13 @@ pub fn main() {
   let uname = uname()
   let user = envoy.get("USER") |> result.unwrap("unknown")
   // TODO: Improve shell parsing
-  let shell = envoy.get("SHELL") |> result.unwrap("unknown")
+  let shell =
+    envoy.get("SHELL")
+    |> result.unwrap("unknown")
+    |> string.split("/")
+    |> list.last
+    |> result.unwrap("unknown")
+
   let os_release = os_release.parse_os_release()
 
   let cpu =
