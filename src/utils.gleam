@@ -2,12 +2,22 @@ import gleam/int
 import gleam/string
 
 pub fn trim_matches(value: String, matcher: String) -> String {
-  case
-    value |> string.starts_with(matcher) && value |> string.ends_with(matcher)
-  {
+  value |> trim_start_matches(matcher) |> trim_end_matches(matcher)
+}
+
+pub fn trim_start_matches(value: String, matcher: String) -> String {
+  case value |> string.starts_with(matcher) {
     True ->
       value
       |> string.drop_left(matcher |> string.length)
+    False -> value
+  }
+}
+
+pub fn trim_end_matches(value: String, matcher: String) -> String {
+  case value |> string.ends_with(matcher) {
+    True ->
+      value
       |> string.drop_right(matcher |> string.length)
     False -> value
   }
