@@ -1,16 +1,15 @@
 import bytesize
 import cpuinfo
 import envoy
-import gleam/dict.{type Dict}
-import gleam/int
+import gleam/dict
 import gleam/io
 import gleam/list
 import gleam/result
 import gleam/string
 import gleam_community/ansi
 import gleam_community/colour
+import meminfo
 import os_release
-import simplifile
 import utils
 
 pub type Uname {
@@ -50,7 +49,7 @@ pub fn main() {
     |> dict.get("model name")
     |> result.unwrap("unknown")
 
-  let meminfo = parse_meminfo()
+  let meminfo = meminfo.parse_meminfo()
   let memtotal = meminfo |> dict.get("MemTotal") |> result.unwrap(0)
   let memavailable = meminfo |> dict.get("MemAvailable") |> result.unwrap(0)
 
@@ -83,31 +82,6 @@ pub fn main() {
   io.println("Shell: " |> ansi.bright_cyan <> shell)
   io.println("CPU: " |> ansi.bright_cyan <> cpu)
   io.println("Memory: " |> ansi.bright_cyan <> used_ram <> " / " <> total_ram)
-}
-
-pub fn parse_meminfo() -> Dict(String, Int) {
-  case simplifile.read("/proc/meminfo") {
-    Error(_) -> dict.new()
-    Ok(file) -> {
-      file
-      |> string.split("\n")
-      |> list.fold(dict.new(), fn(meminfo, line) {
-        case string.split_once(line, ":") {
-          Error(_) -> meminfo
-          Ok(#(key, value)) ->
-            case
-              value
-              |> utils.trim_end_matches("kB")
-              |> string.trim
-              |> int.parse
-            {
-              Error(_) -> meminfo
-              Ok(value) -> dict.insert(meminfo, key |> string.trim, value)
-            }
-        }
-      })
-    }
-  }
 }
 
 const arch_logo = "                  -`
