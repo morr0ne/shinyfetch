@@ -41,6 +41,9 @@ pub fn main() {
     |> list.last
     |> result.unwrap("unknown")
 
+  // TODO: Improve terminal detection
+  let terminal = envoy.get("TERM") |> result.unwrap("unknown")
+
   let os_release = os_release.parse_os_release()
 
   let cpu =
@@ -81,6 +84,7 @@ pub fn main() {
   io.println("Kernel: " |> ansi.bright_cyan <> uname.release)
   io.println("Uptime: " |> ansi.bright_cyan <> uptime() |> utils.format_time)
   io.println("Shell: " |> ansi.bright_cyan <> shell)
+  io.println("Terminal: " |> ansi.bright_cyan <> terminal)
   io.println("CPU: " |> ansi.bright_cyan <> cpu)
   io.println("Memory: " |> ansi.bright_cyan <> used_ram <> " / " <> total_ram)
 }
