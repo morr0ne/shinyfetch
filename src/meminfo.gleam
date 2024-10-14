@@ -3,6 +3,7 @@ import gleam/int
 import gleam/list
 import gleam/string
 import simplifile
+
 import utils
 
 pub fn parse_meminfo() -> Dict(String, Int) {
