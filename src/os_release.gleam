@@ -2,6 +2,7 @@ import gleam/dict.{type Dict}
 import gleam/list
 import gleam/string
 import simplifile
+
 import utils
 
 // FIXME: handle comments starting with #

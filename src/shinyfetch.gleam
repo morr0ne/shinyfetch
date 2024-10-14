@@ -1,5 +1,3 @@
-import bytesize
-import cpuinfo
 import envoy
 import gleam/dict
 import gleam/io
@@ -8,6 +6,9 @@ import gleam/result
 import gleam/string
 import gleam_community/ansi
 import gleam_community/colour
+
+import bytesize
+import cpuinfo
 import meminfo
 import os_release
 import utils
