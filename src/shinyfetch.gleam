@@ -8,6 +8,7 @@ import gleam/list
 import gleam/result
 import gleam/string
 import gleam_community/ansi
+import gleam_community/colour
 import os_release
 import simplifile
 import utils
@@ -63,6 +64,14 @@ pub fn main() {
     |> bytesize.kib
     |> bytesize.to_string
 
+  let assert Ok(blue) = colour.from_rgb255(91, 206, 250)
+  let assert Ok(pink) = colour.from_rgb255(245, 169, 184)
+  let assert Ok(white) = colour.from_rgb255(255, 255, 255)
+
+  let _transgender_colors = [blue, pink, white, pink, blue]
+
+  // io.println(arch_logo)
+
   io.println({ user <> "@" <> uname.nodename } |> ansi.bright_cyan)
   io.println("----------------")
   io.println(
@@ -100,3 +109,23 @@ pub fn parse_meminfo() -> Dict(String, Int) {
     }
   }
 }
+
+const arch_logo = "                  -`
+                 .o+`
+                `ooo/
+               `+oooo:
+              `+oooooo:
+              -+oooooo+:
+            `/:-:++oooo+:
+           `/++++/+++++++:
+          `/++++++++++++++:
+         `/+++ooooooooooooo/`
+        ./ooosssso++osssssso+`
+       .oossssso-````/ossssss+`
+      -osssssso.      :ssssssso.
+     :osssssss/        osssso+++.
+    /ossssssss/        +ssssooo/-
+  `/ossssso+/:-        -:/+osssso+-
+ `+sso+:-`                 `.-/+oso:
+`++:.                           `-/+/
+.`                                 `"
